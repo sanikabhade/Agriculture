@@ -1,0 +1,57 @@
+{
+    "project": "Crop and Market Modal Price Forecasting",
+    "model_type": "TensorFlow/Keras LSTM",
+    "target": "Modal Price",
+    "target_unit": "Verify against source Price Unit; expected Rs./Quintal",
+    "lookback_observations": 14,
+    "forecast_horizon": "One next available observation per Commodity-Market series",
+    "series_keys": [
+        "Commodity",
+        "Market"
+    ],
+    "numeric_features": [
+        "Modal Price",
+        "Arrival Quantity",
+        "Temperature_C",
+        "Min_Temperature_C",
+        "Max_Temperature_C",
+        "Precipitation_mm",
+        "Relative_Humidity_Percent",
+        "pH_0_30",
+        "Organic_Carbon_g_kg_0_30",
+        "Nitrogen_g_kg_0_30",
+        "Clay_percent_0_30",
+        "CEC_cmolc_kg_0_30",
+        "Crop_Duration_Days",
+        "Month_Sin",
+        "Month_Cos",
+        "DayOfYear_Sin",
+        "DayOfYear_Cos",
+        "Log_Days_Since_Previous_Observation",
+        "Is_First_Observation"
+    ],
+    "categorical_features": [
+        "Commodity",
+        "Market",
+        "District",
+        "Typical_Sowing_Season"
+    ],
+    "numeric_preprocessing": "Use the saved x_scaler, fitted on training rows only, with numeric_features in the exact saved order.",
+    "target_preprocessing": "Model output is scaled. Use the saved y_scaler.inverse_transform to convert predictions back to the original price scale.",
+    "categorical_preprocessing": "Use saved category_maps. Map unseen categories to ID 0. Do not refit mappings during inference.",
+    "sequence_preprocessing": [
+        "Sort observations by Commodity, Market, and Date.",
+        "Build sequences from the previous LOOKBACK observations.",
+        "Keep numerical and categorical sequence order aligned.",
+        "Reproduce the training notebook's engineered date and observation-gap features.",
+        "Do not use the target observation's actual Modal Price as an input."
+    ],
+    "engineered_features": {
+        "Days_Since_Previous_Observation": "Date difference from the previous observation within each Commodity-Market series; first observation uses 0.",
+        "Log_Days_Since_Previous_Observation": "log1p(Days_Since_Previous_Observation)",
+        "Is_First_Observation": "1 for the first observation in a series, otherwise 0.",
+        "DayOfYear_Sin": "Use the same annual cyclical formula as training.",
+        "DayOfYear_Cos": "Use the same annual cyclical formula as training."
+    },
+    "saved_at": "2026-10-29T10:47:35"
+}
