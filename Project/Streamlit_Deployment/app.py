@@ -1,4 +1,3 @@
-
 import os
 import gzip
 import streamlit as st
@@ -18,12 +17,12 @@ st.set_page_config(
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 HISTORICAL_PATH = os.path.join(
-    BASE_DIR, "data",
+    BASE_DIR,
     "Maharashtra_Agri_Master_2024_Jul2025.csv.gz"
 )
 
 FORECAST_PATH = os.path.join(
-    BASE_DIR, "outputs",
+    BASE_DIR,
     "Maharashtra_Crop_Market_12_Month_Forecast.csv"
 )
 
